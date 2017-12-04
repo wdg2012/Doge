@@ -40,6 +40,7 @@ public class Doge {
     private ServiceMethod loadServiceMethod(Method method) {
         ServiceMethod result = mServiceMethodCache.get(method);
         if (result==null){
+            result = new ServiceMethod(new ServiceMethod.Builder(this,method));
             mServiceMethodCache.put(method, result);
         }
         return result;
@@ -80,5 +81,7 @@ public class Doge {
              return  doge;
         }
     }
-
+    public HttpUrl baseUrl() {
+        return baseUrl;
+    }
 }
