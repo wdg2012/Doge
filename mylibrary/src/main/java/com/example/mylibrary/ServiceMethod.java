@@ -1,5 +1,7 @@
 package com.example.mylibrary;
 
+import android.util.Log;
+
 import com.example.mylibrary.http.FormUrlEncoded;
 import com.example.mylibrary.http.POST;
 
@@ -8,6 +10,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
 import okhttp3.HttpUrl;
+import okhttp3.Request;
 
 /**
  * Created by Administrator on 2017/12/4 0004.
@@ -17,12 +20,17 @@ public class ServiceMethod {
   private HttpUrl mHttpUrl;
   private boolean isPost;
     private  String mRelativeUrl;
+    private final Annotation[] methodAnnotations;
+    private final Annotation[][] parameterAnnotationsArray;
+    final Type[] parameterTypes;
 
     public ServiceMethod(ServiceMethod.Builder builder) {
        mRelativeUrl = builder.mRelativeUrl;
        isPost = builder.isPost;
        mHttpUrl = builder.mDoge.baseUrl();
-
+       methodAnnotations = builder.methodAnnotations;
+       parameterAnnotationsArray = builder.parameterAnnotationsArray;
+       parameterTypes = builder.parameterTypes;
     }
 
     public static class Builder{
@@ -39,12 +47,12 @@ public class ServiceMethod {
           this.mMethod = method;
           parameterTypes = this.mMethod.getGenericParameterTypes();
           methodAnnotations = this.mMethod.getAnnotations();
+
           this.parameterAnnotationsArray = method.getParameterAnnotations();
           for (Type type:parameterTypes){
               String str = type.toString();
               System.out.print(str);
           }
-
           build();
       }
       public ServiceMethod build(){
@@ -65,5 +73,10 @@ public class ServiceMethod {
               isFormEncoded = true;
           }
         }
+    }
+    public Request toRequest(Object ...arg){
+
+        System.out.print(arg[0].getClass());
+        return null;
     }
 }

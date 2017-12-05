@@ -30,7 +30,7 @@ public class Doge {
           @Override
           public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
                ServiceMethod serviceMethod = loadServiceMethod(method);
-
+               serviceMethod.toRequest(args);
               return null;
           }
       });
